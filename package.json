@@ -1,0 +1,23 @@
+{
+  "name": "atomchat",
+  "version": "0.1.0",
+  "description": "wechat client based on electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zionjo89757/AtomChat.git"
+  },
+  "author": "zionjo",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/zionjo89757/AtomChat/issues"
+  },
+  "homepage": "https://github.com/zionjo89757/AtomChat#readme",
+  "devDependencies": {
+    "electron": "^11.0.3"
+  }
+}
