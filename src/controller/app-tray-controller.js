@@ -21,10 +21,10 @@ class AppTrayController {
         this.tray.setToolTip('Wechat Desktop')
 
         // 设置右键菜单
-        const context = Menu.buildFromTemplate([{
+        const context = Menu.buildFromTemplate([/*{
                 label: '切换聊天窗口',
                 click: () => this.mainController.toggle()
-            },
+            },*/
             {
                 label: '退出',
                 click: () => this.cleanupAndExit()

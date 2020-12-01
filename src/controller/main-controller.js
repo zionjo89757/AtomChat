@@ -3,12 +3,15 @@ const {
     BrowserWindow,
     session,
     shell,
-    ipcMain
+    ipcMain,
 } = require('electron');
+
 const path = require('path');
 const CssInjector = require('../js/css-injector');
 
 class MainController {
+
+   
     constructor() {
         this.init()
     }
@@ -19,10 +22,10 @@ class MainController {
         this.window = new BrowserWindow({
             show: false,
             width: 380,
-            height: 500,
+            height: 540,
             frame: true,
             autoHideMenuBar: true,
-            resizable: true,
+            resizable: false,
             icon: path.join(__dirname, '../../build/icons/512x512.png'),
             webPreferences: { 
                 webSecurity: false,
@@ -30,21 +33,26 @@ class MainController {
             }
         })
 
+
         // 加载页面
         this.window.loadURL('https://wx.qq.com/?lang=zh_CN')
-
+        
+        
+        
         // 注入js和css
-        this.window.webContents.on('dom-ready', () => {
+        this.window.webContents.on('did-finish-load', () => {
 
+            
             // 注入 css
+            this.window.webContents.insertCSS(CssInjector.theme01)
             this.window.webContents.insertCSS(CssInjector.login)
             this.window.webContents.insertCSS(CssInjector.main)
 
             // 注入 js
-            this.addFontAwesomeCDN()
+            // this.addFontAwesomeCDN()
             
             this.changeTitle()
-            this.addToggleContactElement()
+            //this.addToggleContactElement()
 
             this.addUnreadMessageListener()
 
@@ -62,7 +70,8 @@ class MainController {
         // 在新的标签页打开链接的话，就在浏览器中打开
         this.window.webContents.on('new-window', this.openInBrowser)
 
-        // 在这些请求结束后改变窗口的形状
+        // 在这些请求结束后改变窗口的形状、
+        
         session.defaultSession.webRequest.onCompleted({urls: [
             'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit*',
             'https://wx2.qq.com/cgi-bin/mmwebwx-bin/webwxinit*',
@@ -73,13 +82,13 @@ class MainController {
         )
 
         // 两种桌面形式
-        ipcMain.on('resizeWindow', (event, value) => {
-            if (value === 'desktop') {
-                this.window.setSize(1000, this.window.getSize()[1], true)
-            } else {
-                this.window.setSize(450, this.window.getSize()[1], true)
-            }
-        })
+        // ipcMain.on('resizeWindow', (event, value) => {
+        //     if (value === 'desktop') {
+        //         this.window.setSize(1000, this.window.getSize()[1], true)
+        //     } else {
+        //         this.window.setSize(450, this.window.getSize()[1], true)
+        //     }
+        // })
     }
 
     show() {
@@ -88,7 +97,7 @@ class MainController {
     }
 
     toggle() {
-        if (this.window.isFocused()) {
+        if (this.window.isVisible()) {
             this.window.hide()
         } else {
             this.show()
@@ -108,8 +117,9 @@ class MainController {
         shell.openExternal(redirectUrl)
     }
 
+    // 控制登陆界面
     handleRequest(details) {
-        // console.log(details.url)
+        console.log(details.url)
         details.url.startsWith('https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit') && this.login()
         details.url.startsWith('https://wx2.qq.com/cgi-bin/mmwebwx-bin/webwxinit') && this.login()
         details.url.startsWith('https://wx.qq.com/?&lang') && this.logout()
@@ -118,15 +128,20 @@ class MainController {
 
     // 设置为主界面大小
     login() {
-        this.window.hide()
-        this.window.setSize(1000, 800, true)
+        //console.log('size larger')
+        //this.window.hide()
         this.window.setResizable(true)
-        this.window.show()
+        this.window.setSize(1000, 600, true)
+        //this.window.show()
     }
 
     // 设置为登入页面大小
     logout() {
-        this.window.setSize(380, 500, true)
+        //console.log('size smaller')
+        //this.window.hide()
+        this.window.setSize(380, 540, true)
+        this.window.setResizable(false)
+        //this.window.show()
     }
 
     // 添加外部样式
@@ -137,22 +152,22 @@ class MainController {
     //    crossOrigin = "anonymous"
     ///>
     //</head>
-    addFontAwesomeCDN() {
-        this.window.webContents.executeJavaScript(`
-            let faLink = document.createElement('link');
-            faLink.setAttribute('rel', 'stylesheet');
-            faLink.type = 'text/css';
-            faLink.href = 'https://use.fontawesome.com/releases/v5.0.13/css/all.css';
-            faLink.integrity = 'sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp';
-            faLink.crossOrigin = 'anonymous';
-            document.head.appendChild(faLink);
-        `)
-    }
+    // addFontAwesomeCDN() {
+    //     this.window.webContents.executeJavaScript(`
+    //         let faLink = document.createElement('link');
+    //         faLink.setAttribute('rel', 'stylesheet');
+    //         faLink.type = 'text/css';
+    //         faLink.href = 'https://use.fontawesome.com/releases/v5.0.13/css/all.css';
+    //         faLink.integrity = 'sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp';
+    //         faLink.crossOrigin = 'anonymous';
+    //         document.head.appendChild(faLink);
+    //     `)
+    // }
 
     // 设置标题
     changeTitle() {
         this.window.webContents.executeJavaScript(`
-            var titleName = 'Freechat (version: ${app.getVersion()})';
+            var titleName = 'AtomChat (version: ${app.getVersion()})';
             document.title = titleName;
             new MutationObserver(mutations => {
                 if (document.title !== titleName) {
@@ -175,25 +190,25 @@ class MainController {
         `)
     }
     // 添加一个切换按钮，可以改变窗体的大小
-    addToggleContactElement() {
-        this.window.webContents.executeJavaScript(`
-            let toggleButton = document.createElement('i');
-            toggleButton.className = 'toggle-mobile-button fas fa-mobile-alt';
-            toggleButton.onclick = () => {
-                if (toggleButton.classList.contains('mini')) {
-                    toggleButton.className = 'toggle-mobile-button fas fa-mobile-alt';
-                    require('electron').ipcRenderer.send('resizeWindow', 'desktop');
-                } else {
-                    toggleButton.className = 'toggle-mobile-button fas fa-desktop mini';
-                    require('electron').ipcRenderer.send('resizeWindow', 'mobile');
-                }
+    // addToggleContactElement() {
+    //     this.window.webContents.executeJavaScript(`
+    //         let toggleButton = document.createElement('i');
+    //         toggleButton.className = 'toggle-mobile-button fas fa-mobile-alt';
+    //         toggleButton.onclick = () => {
+    //             if (toggleButton.classList.contains('mini')) {
+    //                 toggleButton.className = 'toggle-mobile-button fas fa-mobile-alt';
+    //                 require('electron').ipcRenderer.send('resizeWindow', 'desktop');
+    //             } else {
+    //                 toggleButton.className = 'toggle-mobile-button fas fa-desktop mini';
+    //                 require('electron').ipcRenderer.send('resizeWindow', 'mobile');
+    //             }
 
-                document.querySelector('div.main').classList.toggle('mini');
-            };
-            let titleBar = document.querySelector('.header');
-            titleBar.appendChild(toggleButton);
-        `)   
-    }
+    //             document.querySelector('div.main').classList.toggle('mini');
+    //         };
+    //         let titleBar = document.querySelector('.header');
+    //         titleBar.appendChild(toggleButton);
+    //     `)   
+    // }
 }
 
 module.exports = MainController
