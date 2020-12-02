@@ -25,7 +25,7 @@ class MainController {
             height: 540,
             frame: false,
             autoHideMenuBar: true,
-            resizable: false,
+            //resizable: false,
             transparent: true,
             icon: path.join(__dirname, '../../build/icons/512x512.png'),
             webPreferences: { 
@@ -120,7 +120,7 @@ class MainController {
 
     // 控制登陆界面
     handleRequest(details) {
-        //console.log(details.url)
+        console.log(details.url)
         details.url.startsWith('https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit') && this.login()
         details.url.startsWith('https://wx2.qq.com/cgi-bin/mmwebwx-bin/webwxinit') && this.login()
         details.url.startsWith('https://wx.qq.com/?&lang') && this.logout()

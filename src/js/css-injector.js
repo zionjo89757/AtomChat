@@ -9,7 +9,7 @@ CssInjector.theme01 = `
 
     body {
         /*background: url(https://images.weserv.nl/?url=https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/453b8ebcdefa46a69c620da13f346ce2~tplv-k3u1fbpfcp-zoom-1.image?imageView2/2/w/800/q/85) !important ;*/
-        background: rgba(0, 0, 0, 0) !important ;
+        background: rgba(0, 0, 0, 0.1) !important ;
         background-size: cover !important ;
         /*background-size: contain !important ;*/
         height: 100% !important ;
@@ -118,6 +118,17 @@ CssInjector.theme01 = `
         background: rgba(256, 256, 256, 0.2) !important ;
     }
 
+    .web_wechat_face{
+        background: url("https://github.com/zionjo89757/AtomChat/raw/main/assets/toolbar_icon/face.png") !important;
+        background-size: cover !important;
+    }
+    
+    
+    .web_wechat_pic{
+        background: url("https://github.com/zionjo89757/AtomChat/raw/main/assets/toolbar_icon/file.png") !important;
+        background-size: cover !important;
+    }
+    
 
     .chat .box_ft {
         margin-right: 0px !important ;
