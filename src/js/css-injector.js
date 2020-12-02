@@ -2,6 +2,11 @@ class CssInjector {}
 
 CssInjector.theme01 = `
     /*背景图片*/
+
+    button,a {
+        -webkit-app-region: no-drag; 
+    }
+
     body {
         /*background: url(https://images.weserv.nl/?url=https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/453b8ebcdefa46a69c620da13f346ce2~tplv-k3u1fbpfcp-zoom-1.image?imageView2/2/w/800/q/85) !important ;*/
         background: rgba(0, 0, 0, 0) !important ;
@@ -19,7 +24,8 @@ CssInjector.theme01 = `
     /*登陆QR*/
     .login_box {
         background: rgba(0, 0, 0, .65) !important ;
-        border-radius: 0px !important ;
+        border-radius: 5px !important ;
+        -webkit-app-region: drag;
     }
     /*登录界面*/
     .login_box .qrcode .sub_title {
@@ -28,12 +34,12 @@ CssInjector.theme01 = `
 
     .login_box .avatar .action {
         color: #e6e6e6 !important ;
-        border-color: rgba(256,256,256,1) !important ;
+        border-color: rgba(256,256,256,0.8) !important ;
     }
 
     .login_box .association .button.button_default {
         color: #e6e6e6 !important ;
-        border-color: rgba(256,256,256,1) !important ;
+        border-color: rgba(256,256,256,0.8) !important ;
     }
     /*
     .waiting_confirm {
@@ -43,7 +49,7 @@ CssInjector.theme01 = `
 
     /*聊天界面*/
     .main_inner{
-        border-radius: 0px !important ;
+        border-radius: 5px !important ;
     }
 
     /*右侧窗口*/
@@ -51,6 +57,9 @@ CssInjector.theme01 = `
         background: rgba(0, 0, 0, 0.65) !important ;
     }
 
+    .title_wrap{
+        -webkit-app-region: drag;
+    }
 
     /*聊天窗口*/
     /*
@@ -106,7 +115,7 @@ CssInjector.theme01 = `
 
     /*工具栏*/
     #tool_bar {
-        background: rgba(256, 256, 256, 0.5) !important ;
+        background: rgba(256, 256, 256, 0.2) !important ;
     }
 
 
@@ -123,12 +132,13 @@ CssInjector.theme01 = `
 
     /*发送按钮*/
     .btn_send {
-        background-color: #b2e281 !important ;
+        background: rgba(178, 256, 129,0.6) !important ;
         margin-right: 19px !important ;
+        border: none !important;
     }
 
     .btn_send:hover {
-        background-color: #7ce313 !important ;
+        background: rgba(178, 256, 129,0.8) !important ;
     }
 
 
@@ -189,9 +199,13 @@ CssInjector.theme01 = `
     .mmpop {
         background: rgba(230, 230, 230, 0)  !important ;
     }
-
+    /*表情框*/
     .expression {
-        border: none
+        border: none !important;
+    }
+
+    .exp_hd_item.active{
+        background: rgba(230, 230, 230, 0.5) ！important;
     }
 
     .exp_hd {
@@ -205,7 +219,7 @@ CssInjector.theme01 = `
 
     .expression:after,
     .expression:before {
-        border-top-color: #e4e4e4 !important ;
+        display: none; !important ;
     }
 
     .qq_face a {
@@ -215,6 +229,9 @@ CssInjector.theme01 = `
     .emoji_face a {
         border-color: transparent !important ;
     }
+
+
+    
 
     /*下拉框*/
     .dropdown_menu{

@@ -23,7 +23,7 @@ class MainController {
             show: false,
             width: 380,
             height: 540,
-            frame: true,
+            frame: false,
             autoHideMenuBar: true,
             resizable: false,
             transparent: true,
@@ -120,7 +120,7 @@ class MainController {
 
     // 控制登陆界面
     handleRequest(details) {
-        console.log(details.url)
+        //console.log(details.url)
         details.url.startsWith('https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit') && this.login()
         details.url.startsWith('https://wx2.qq.com/cgi-bin/mmwebwx-bin/webwxinit') && this.login()
         details.url.startsWith('https://wx.qq.com/?&lang') && this.logout()
