@@ -26,6 +26,7 @@ class MainController {
             frame: true,
             autoHideMenuBar: true,
             resizable: false,
+            transparent: true,
             icon: path.join(__dirname, '../../build/icons/512x512.png'),
             webPreferences: { 
                 webSecurity: false,

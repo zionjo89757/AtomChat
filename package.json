@@ -7,7 +7,11 @@
     "start": "electron .",
     "dev": "electron . --debug",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "electron-packager . --out ./out --overwrite"
+    "pack": "electron-builder --dir",
+    "dist:linux": "electron-builder --linux AppImage",
+    "dist:macOS": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "postinstall": "electron-builder install-app-deps"
   },
   "repository": {
     "type": "git",
@@ -21,6 +25,27 @@
   "homepage": "https://github.com/zionjo89757/AtomChat#readme",
   "devDependencies": {
     "electron": "^11.0.3",
-    "electron-packager": "^15.1.0"
+    "electron-builder": "^22.9.1"
+  },
+  "build": {
+    "appId": "xyz.zionjo.${name}",
+    "linux": {
+      "category": "Network;Utility",
+      "desktop": {
+        "StartupWMClass": "atomchat"
+      },
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": "msi"
+    }
   }
 }
